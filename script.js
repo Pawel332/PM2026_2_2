@@ -37,10 +37,13 @@
 
   cw2.addEventListener("click", function () {
     answer.innerHTML = "Processing...";
-    fetch("https://jsonplaceholder.typicode.com/posts")
-      .then((response) => response.json())
-      .then((posts) => {
-        let html = `
+    const selectedId = lista.value;
+
+    fetch(`https://jsonplaceholder.typicode.com/posts/${selectedId}`)
+      .then(response => response.json())
+      .then(post => {
+        console.log("Wybrany post:", post);
+        answer.innerHTML = `
           <table border="1" style="width: 100%; text-align: center; border-collapse: collapse;">
             <thead>
               <tr>
@@ -50,24 +53,14 @@
               </tr>
             </thead>
             <tbody>
+              <tr>
+                <td>${post.id}</td>
+                <td style="color: red;">${post.title}</td>
+                <td style="color: green;">${post.body}</td>
+              </tr>
+            </tbody>
+          </table>
         `;
-
-        posts.forEach((post) => {
-          html += `
-            <tr>
-              <td>${post.id}</td>
-              <td style="color: red;">${post.title}</td>
-              <td style="color: green;">${post.body}</td>
-            </tr>
-          `;
-        });
-
-        html += `
-        </tbody>
-        </table>
-      `;
-
-        answer.innerHTML = html;
       });
   });
 
