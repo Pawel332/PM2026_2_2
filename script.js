@@ -4,6 +4,7 @@
   const cw2 = document.getElementById("cw2");
   const cw3 = document.getElementById("cw3");
   const answer = document.getElementById("answer");
+  const pops = document.getElementById("pop");
 
   example.addEventListener("click", function () {
     fetch("https://jsonplaceholder.typicode.com/posts")
@@ -38,10 +39,10 @@
   cw2.addEventListener("click", function () {
     answer.innerHTML = "Processing...";
     const selectedId = lista.value;
-
+    pops.style.display = "flex";
     fetch(`https://jsonplaceholder.typicode.com/posts/${selectedId}`)
-      .then(response => response.json())
-      .then(post => {
+      .then((response) => response.json())
+      .then((post) => {
         console.log("Wybrany post:", post);
         answer.innerHTML = `
           <table border="1" style="width: 100%; text-align: center; border-collapse: collapse;">
@@ -61,6 +62,9 @@
             </tbody>
           </table>
         `;
+      })
+      .finally(() => {
+        pops.style.display = "none";
       });
   });
 
